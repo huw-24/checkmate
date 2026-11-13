@@ -1,0 +1,106 @@
+/* ===== POSTER LAYOUT — style_revised.css 위에 덮어쓰는 파일 ===== */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&display=swap');
+
+:root{ --bg:#343434; --white:#efefef; --cell:min(5.7vw,10.1vh); --head:"IBM Plex Sans Condensed","Noto Sans KR",sans-serif; }
+
+body:not(#z){
+  padding:0; display:block; position:relative; overflow:hidden;
+  .top-rule{position:absolute;top:0;left:0;margin:0;border-top:1px solid var(--line);z-index:50}
+
+  /* 그리드 래퍼는 사라지고, 모든 요소가 .page 기준으로 자유 배치 */
+  .page{position:fixed;inset:0;width:auto;max-width:none;margin:0;display:block}
+  .workspace,.board-section,.record-section,.game-info,.board-wrap{display:contents}
+
+  /* ---- BOARD (회전, 오른쪽/아래로 잘림) ---- */
+  .chess-board{position:absolute!important;left:57.7%;top:2.3%;margin:0;
+    transform-origin:0 0;transform:rotate(19.4deg)!important;z-index:1;border:1px solid var(--line)}
+  .ranks,.files{display:none}
+
+  /* ---- BIG HEADING ---- */
+  .board-heading{position:absolute;left:32.6%;top:1.6%;right:auto;transform:none;
+    background:none;border:0;padding:0;color:var(--white);z-index:6;
+    font:700 4.3vw/1 var(--head);text-transform:uppercase;letter-spacing:.01em}
+
+  /* ---- PLAYERS ---- */
+  .players{position:absolute;left:82.7%;top:12.7%;width:16.1%;margin:0;transform:none;z-index:6}
+  .player{height:2.6vw;padding:0 .8vw;font-size:1.5vw;border:1px solid var(--line)}
+
+  /* ---- CAPTURED ---- */
+  .captured-box{position:absolute;left:25.4%;top:23.4%;width:21.3%;height:22.8%;border:1px solid var(--line);z-index:3}
+  .box-tab{left:0;top:0;height:auto;padding:0;background:none;border:0;color:var(--white);
+    transform:translateY(-100%);font:700 2.1vw/1 var(--head);text-transform:uppercase}
+  .captured-side{padding:0 .8vw;gap:0}
+  .captured-piece{flex:0 0 2vw;width:2vw;height:3.2vw}
+
+  /* ---- TIME ---- */
+  .timer-box{position:absolute;left:90.6%;top:75.7%;width:8.1%;height:8.9%;padding:0;
+    display:flex;align-items:center;justify-content:center;border:1px solid var(--line);z-index:6}
+  .timer-box .box-tab{left:auto;right:0;transform:translateY(-82%)}
+  .timer{font-size:1.4vw}
+  .seconds{display:none}
+
+  /* ---- MOVE LIST ---- */
+  .record{position:absolute;left:1.9%;bottom:16.5%;width:38.9%;max-height:58%;margin:0;transform:none;z-index:8}
+  .record-title{position:static;background:none;border:0;padding:0;margin:0;color:var(--white);
+    font:700 2.1vw/1 var(--head);text-transform:uppercase}
+  .move-list{overflow:visible}
+  .move-row{font-family:"Noto Sans KR",sans-serif;font-size:1.65vw}
+  .move-row.active{display:grid;grid-template-columns:4.6vw 1fr;border:0;background:none;margin:0}
+  .move-row.active.first-question{grid-template-columns:1fr}
+  .move-row.pair-row{border:1px solid var(--line)}
+  .active-cell{display:contents}
+  .move-no{border:1px solid var(--line);font-size:2.4vw;height:3.2vw;justify-content:center}
+  .move-line1,.move-line2{grid-column:2;border:1px solid var(--line);margin:0;
+    min-height:3.3vw;padding:0 2.2vw;display:flex;align-items:center;flex-wrap:nowrap;background:none}
+  .move-line1{grid-row:1}
+  .move-line2{grid-row:2;margin-top:-1px;justify-content:flex-end;gap:.6vw}
+  .move-row.first-question :is(.move-line1,.move-line2){grid-column:1}
+  .answer-inline{text-align:right;font-size:1.65vw}
+  .record-footer{margin-top:.8vw;font-size:.8vw;color:var(--muted);justify-content:space-between}
+
+  /* ---- DECOR ---- */
+  .star{position:absolute;width:2.05vw;height:2.05vw;background:var(--white);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;font:500 1.9vw/1 "IBM Plex Mono",monospace;
+    padding-top:.5vw;z-index:6}
+  .s1{left:28.2%;top:5.9%} .s2{left:31.3%;top:10.9%} .s3{left:2.8%;top:92.7%}
+  .xbox{position:absolute;left:80.8%;top:9.4%;width:2.5vw;height:2.5vw;border:1px solid var(--line);z-index:6;
+    background:linear-gradient(to top right,transparent calc(50% - .5px),var(--line) 50%,transparent calc(50% + .5px)),
+               linear-gradient(to bottom right,transparent calc(50% - .5px),var(--line) 50%,transparent calc(50% + .5px))}
+  .pulse{position:absolute;left:42%;top:85%;width:17.4%;height:8.7%;border:1px solid var(--line);z-index:6;
+    display:flex;align-items:center;justify-content:space-between;padding:0 .6vw;background:var(--bg)}
+  .pulse::before{content:"PULSE";position:absolute;left:0;top:0;transform:translateY(-100%);
+    font:700 2.1vw/1 var(--head);color:var(--white)}
+  .pulse i{display:block;width:.14vw;height:var(--h);background:var(--white);border-radius:1px;
+    animation:pulse var(--d) ease-in-out infinite alternate}
+  @keyframes pulse{to{transform:scaleY(.25)}}
+
+  .b1-connect{opacity:.45;top:auto;bottom:10px;right:14px}
+  .b1-status{top:auto;bottom:-6px;right:14px;opacity:.45}
+}
+@media (prefers-reduced-motion:reduce){.pulse i{animation:none!important}}
+
+/* Screenshot-accurate poster finishing, 1653 x 928 reference. */
+:root { --bg:#343434; --white:#efefef; --line:#cfcfcf; --cell:min(5.7vw,10.1vh); }
+body:not(#z) .top-rule {display:none}
+body:not(#z) .chess-board {width:calc(8 * var(--cell));height:calc(8 * var(--cell));box-shadow:none;transition:opacity 1.45s ease!important;}
+body:not(#z) .chess-board:hover {transform:rotate(19.4deg)!important}
+body:not(#z) .chess-board .piece {width:80%;height:80%;}
+body:not(#z) .board-heading {font-family:'IBM Plex Sans Condensed','Arial Narrow',sans-serif;font-weight:700;letter-spacing:-.035em;white-space:nowrap;line-height:1;}
+body:not(#z) .captured-box {background:var(--bg);}
+body:not(#z) #capturedWhite {background:var(--bg);}
+body:not(#z) #capturedBlack {background:var(--white);}
+body:not(#z) .captured-piece.off-board-piece {opacity:1;}
+body:not(#z) #capturedWhite .captured-piece {filter:grayscale(1) brightness(0) invert(1);}
+body:not(#z) #capturedBlack .captured-piece {filter:grayscale(1) brightness(0);}
+body:not(#z) .record-footer {display:none;}
+body:not(#z) .pulse {cursor:pointer;touch-action:manipulation;}
+body:not(#z) .pulse:focus-visible {outline:2px solid #fff;outline-offset:4px;}
+body:not(#z) .pulse i {animation:none;transform-origin:center;transition:transform .14s ease-out;}
+body:not(#z) .b1-connect {opacity:.45;}
+/* Scale the whole poster proportionally on narrower landscape displays. */
+@media (max-aspect-ratio: 4/3) {
+  body:not(#z) .board-heading {font-size:4.5vw}
+  body:not(#z) .move-row {font-size:clamp(11px,1.65vw,26px)}
+  body:not(#z) .record {width:40%}
+}
+@media (prefers-reduced-motion:reduce) {body:not(#z) .pulse i {transition:none;}}
